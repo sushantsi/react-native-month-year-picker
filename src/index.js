@@ -1,4 +1,4 @@
-import MonthPicker from './MonthPicker';
+import MonthPicker from './MonthPicker.ios';
 export * from './constants';
 
 export default MonthPicker;
