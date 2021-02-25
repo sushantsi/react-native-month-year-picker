@@ -10,7 +10,7 @@
 #import <React/RCTConvert.h>
 #import <React/RCTUtils.h>
 
-#define DEFAULT_SIZE 408
+#define DEFAULT_SIZE 31
 
 @interface RNMonthPicker() <UIPickerViewDataSource, UIPickerViewDelegate>
 @end
@@ -25,6 +25,7 @@ NSDateComponents *minComponents;
 NSMutableArray *years;
 NSInteger selectedMonthRow;
 NSInteger selectedYearRow;
+int maxDaysInMonth[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -56,20 +57,17 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     }
 }
 
-- (void)initYears:(NSInteger)selectedYear {
-    years = [NSMutableArray array];
-    for(NSInteger i = selectedYear - DEFAULT_SIZE; i <= selectedYear + DEFAULT_SIZE; i ++) {
-        [years addObject: [NSNumber numberWithLong:i]];
-    }
-}
-
 - (void)setValue:(nonnull NSDate *)value {
     if (value != _value) {
-        NSDateComponents *selectedDateComponents = [gregorian components:(NSCalendarUnitMonth|NSCalendarUnitYear) fromDate:value];
+        NSDateComponents *selectedDateComponents = [gregorian components:(NSCalendarUnitDay|NSCalendarUnitMonth) fromDate:value];
+        years = [[NSMutableArray alloc] init];
+        for (int i=1; i<DEFAULT_SIZE+1; i++) {
+            [years addObject:[NSNumber numberWithInt:i]];
+        }
         if (!_value) {
-            [self initYears: [selectedDateComponents year]];
+           //[self initDays: [selectedDateComponents month]];
             selectedMonthRow = [selectedDateComponents month] - 1;
-            selectedYearRow = DEFAULT_SIZE;
+            selectedYearRow = [selectedDateComponents day] - 1;
             [self setSelectedRows: NO];
         }
         _value = value;
@@ -78,18 +76,18 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)setMaximumDate:(NSDate *)maximumDate {
     _maximumDate = maximumDate;
-    maxComponents = _maximumDate ? [gregorian components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:_maximumDate] : nil;
+    maxComponents = _maximumDate ? [gregorian components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:_maximumDate] : nil;
 }
 
 - (void)setMinimumDate:(NSDate *)minimumDate {
     _minimumDate = minimumDate;
-    minComponents = _minimumDate ? [gregorian components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:_minimumDate] : nil;
+    minComponents = _minimumDate ? [gregorian components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:_minimumDate] : nil;
 }
 
 - (void)setSelectedRows:(BOOL)animated {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self selectRow:selectedMonthRow inComponent:0 animated:animated];
-        [self selectRow:selectedYearRow inComponent:1 animated:animated];
+        [self selectRow:selectedMonthRow inComponent:1 animated:animated];
+        [self selectRow:selectedYearRow inComponent:0 animated:animated];
     });
 }
 
@@ -103,9 +101,9 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 - (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (component) {
         case 0:
-            return 12;
-        case 1:
             return [years count];
+        case 1:
+            return 12;
             break;
         default:
             return 0;
@@ -116,12 +114,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 // row titles
 - (NSString *)pickerView:(nonnull UIPickerView *) pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     switch (component) {
-        case 0: {
+        case 1: {
             NSDateComponents *comps = [[NSDateComponents alloc] init];
             [comps setMonth:row + 1];
             return [NSString stringWithFormat:@"%@", [df stringFromDate:[gregorian dateFromComponents:comps]]];
         }
-        case 1:
+        case 0:
             return [NSString stringWithFormat:@"%@", years[row]];
         default:
             return nil;
@@ -129,45 +127,43 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 }
 
 - (void)getSelectedMonthRow:(NSInteger)row {
-    NSInteger month = row  + 1;
-    NSInteger year = [years[selectedYearRow] longValue];
-    if (minComponents && year == [minComponents year] && month < [minComponents month]) {
-        selectedMonthRow = [minComponents month] - 1;
-    } else if (maxComponents && year == [maxComponents year] && month > [maxComponents month]) {
-        selectedMonthRow = [maxComponents month] - 1;
-    } else {
         selectedMonthRow = row;
-    }
 }
 
 - (void)getSelectedYearRow:(NSInteger)row {
-    NSInteger year = [years[row] longValue];
-    if (minComponents && (year < [minComponents year])) {
-        selectedYearRow = [years indexOfObject:[NSNumber numberWithInteger:[minComponents year]]];
-    } else if (maxComponents && year > [maxComponents year]) {
-        selectedYearRow = [years indexOfObject:[NSNumber numberWithInteger:[maxComponents year]]];
-    } else {
+    int number = maxDaysInMonth[selectedMonthRow];
+    BOOL inRange = NSLocationInRange(row+1, NSMakeRange(1, number));
+    if(inRange){
         selectedYearRow = row;
+    }else{
+        selectedYearRow = number - 1;
     }
 }
 
 - (void)pickerView:(__unused UIPickerView *)pickerView
       didSelectRow:(NSInteger)row inComponent:(__unused NSInteger)component {
     switch (component) {
-        case 0:
-            [self getSelectedMonthRow:row];
-            break;
         case 1:
+            [self getSelectedMonthRow:row];
+            [self getSelectedYearRow:selectedYearRow];
+            break;
+        case 0:
             [self getSelectedYearRow:row];
-            [self getSelectedMonthRow:selectedMonthRow];
+//            [self getSelectedMonthRow:selectedMonthRow];
             break;
         default:
             return;
     }
     [self setSelectedRows: YES];
     if (_onChange) {
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setMonth:selectedMonthRow + 1];
+        [comps setDay:selectedYearRow + 1];
+        [comps setYear:2021];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDate *newDate = [calendar dateFromComponents:comps];
         _onChange(@{
-                @"newDate": [NSString stringWithFormat: @"%@-%@", [NSString stringWithFormat: @"%ld", selectedMonthRow + 1], [NSString stringWithFormat: @"%@", years[selectedYearRow]]]
+                @"newDate": [NSString stringWithFormat: @"%@ %@", [NSString stringWithFormat: @"%ld", selectedMonthRow + 1],[NSString stringWithFormat: @"%ld", selectedYearRow + 1]]
         });
     }
 }

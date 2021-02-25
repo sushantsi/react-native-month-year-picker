@@ -143,6 +143,13 @@ Enables phone's UI Mode color recognition; for Android 10+ and iOS 13+. Lower OS
 ```js
 <RNMonthPicker autoTheme={false} />
 ```
+#### `setTheme` (`optional`)
+
+Enables phone's UI Mode color recognition; for Android 10+ and iOS 13+. Lower OS versions will always be Light Mode. Default `"light"`.
+
+```js
+<RNMonthPicker theme={"dark"} />
+```
 
 #### `maximumDate` (`optional`)
 

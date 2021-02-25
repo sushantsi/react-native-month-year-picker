@@ -40,6 +40,7 @@ const MonthPicker = ({
   cancelButton,
   neutralButton,
   autoTheme = true,
+  theme = "light"
 }) => {
   invariant(value, 'value prop is required!');
 
@@ -56,7 +57,7 @@ const MonthPicker = ({
   }, []);
 
   const onChange = useCallback(
-    ({ nativeEvent: { newDate } }) =>
+    ({ nativeEvent: { newDate } }) => 
       setSelectedDate(moment(newDate, NATIVE_FORMAT).toDate()),
     [],
   );
@@ -123,6 +124,7 @@ const MonthPicker = ({
             cancelButton,
             neutralButton,
             autoTheme,
+            theme
           }}
           style={styles.picker}
           value={value.getTime()}

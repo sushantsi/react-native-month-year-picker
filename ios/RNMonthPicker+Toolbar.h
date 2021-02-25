@@ -22,6 +22,7 @@
 @property (nonatomic, assign) NSString* cancelButtonLabel;
 @property (nonatomic, assign) NSString* neutralButtonLabel;
 @property (nonatomic, assign) BOOL autoTheme;
+@property (nonatomic, assign) NSString* theme;
 
 - (void)setLocale:(NSLocale *)locale;
 

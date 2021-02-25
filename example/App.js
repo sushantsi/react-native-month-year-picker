@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const DEFAULT_OUTPUT_FORMAT = 'MMM-YYYY';
+const DEFAULT_OUTPUT_FORMAT = 'MMM-DD';
 
 const App = () => {
   const [date, setDate] = useState(new Date());
@@ -32,7 +32,7 @@ const App = () => {
   const showPicker = useCallback((value) => setShow(value), []);
 
   const onValueChange = useCallback(
-    (event, newDate) => {
+    (event, newDate, value) => {
       const selectedDate = newDate || date;
 
       showPicker(false);
@@ -43,7 +43,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Month Year Picker Example</Text>
+      <Text>Day Month Picker Example</Text>
       <Text>{moment(date).format(DEFAULT_OUTPUT_FORMAT)}</Text>
       <TouchableOpacity onPress={() => showPicker(true)} style={styles.button}>
         <Text style={styles.buttonText}>OPEN</Text>
@@ -52,11 +52,11 @@ const App = () => {
         <MonthPicker
           onChange={onValueChange}
           value={date}
-          minimumDate={new Date()}
-          maximumDate={new Date(2022, 5)}
+          // minimumDate={new Date()}
+          // maximumDate={new Date(2022, 5)}
           locale="en"
           mode="full"
-          autoTheme={false}
+          autoTheme={true}
         />
       )}
     </SafeAreaView>

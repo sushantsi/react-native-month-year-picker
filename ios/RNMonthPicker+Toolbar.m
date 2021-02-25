@@ -65,6 +65,16 @@ RNMonthPicker *picker;
     }
 }
 
+- (void)setTheme:(NSString *)themeString {
+    if (@available(iOS 13.0, *)) {
+        if([themeString isEqual: @"dark"]){
+            self.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+        }else{
+            self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+        }
+    }
+}
+
 
 - (void)setValue:(NSDate *)value {
     [picker setValue:value];
