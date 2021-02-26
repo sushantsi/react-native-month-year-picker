@@ -17,11 +17,11 @@ RNMonthPicker *picker;
 - (instancetype)initWithFrame:(CGRect)frame {
     CGRect screen = [[UIScreen mainScreen] bounds];
     if ((self = [super initWithFrame:frame])) {
-        toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(screen), 44)];
+        toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(screen) - 30, 44)];
         cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIAlertActionStyleCancel target:self action:@selector(onCancelButton)];
         doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onDoneButton)];
         picker = [RNMonthPicker new];
-        picker.frame = CGRectMake(0, 44, CGRectGetWidth(screen), 200);
+        picker.frame = CGRectMake(0, 44, CGRectGetWidth(screen) - 30, 200);
         UIColor* defaultColor;
         if (@available(iOS 13.0, *)) {
             defaultColor = [UIColor tertiarySystemBackgroundColor];
