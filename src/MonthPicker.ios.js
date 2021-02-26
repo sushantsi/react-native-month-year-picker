@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, Animated, Modal } from 'react-native';
+import { View, StyleSheet, Dimensions, Animated, Modal, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import moment from 'moment';
 import invariant from 'invariant';
 
@@ -17,10 +17,10 @@ const { Value, timing } = Animated;
 
 const styles = StyleSheet.create({
   container: {
-    width,
-    position: 'absolute',
-    zIndex: 500,
-    bottom: 0,
+    flex:1
+  },
+  scrollModal:{
+    flex:1
   },
   pickerContainer: {
     height: 244,
@@ -110,26 +110,21 @@ const MonthPicker = ({
   }, [selectedDate]);
 
   return (
-    // <Animated.View
-    //   style={{
-    //     ...styles.container,
-    //     opacity,
-    //     transform: [
-    //       {
-    //         translateY: opacity.interpolate({
-    //           inputRange: [0.4, 1],
-    //           outputRange: [150, 0],
-    //         }),
-    //       },
-    //     ],
-    //   }}>
     <Modal
       animationType="slide"
         transparent={true}
         visible={isVisible}
-        onRequestClose={() => {
-          setPickerVisible(!pickerVisible)
-        }}>
+        onRequestClose={onCancel}>
+      <TouchableOpacity 
+            style={styles.container} 
+            activeOpacity={1} 
+            onPressOut={onCancel}
+          >
+            <ScrollView 
+              directionalLockEnabled={true} 
+              contentContainerStyle={styles.scrollModal}
+            >
+      <TouchableWithoutFeedback>
       <View style={styles.pickerContainer}>
         <RNMonthPickerView
           {...{
@@ -151,6 +146,9 @@ const MonthPicker = ({
           maximumDate={maximumDate?.getTime() ?? null}
         />
       </View>
+      </TouchableWithoutFeedback>
+      </ScrollView>
+      </TouchableOpacity>   
     </Modal>
   );
 };
