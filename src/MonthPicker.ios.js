@@ -95,8 +95,10 @@ const MonthPicker = ({
 
   const onCancel = useCallback(() => {
     slideOut(
-      ({ finished }) =>
+      ({ finished }) => {
         finished && onAction && onAction(ACTION_DISMISSED, undefined),
+        setPickerVisible(false)
+      },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
