@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, StyleSheet, Dimensions, Animated, Modal } from 'react-native';
 import moment from 'moment';
 import invariant from 'invariant';
 
@@ -24,13 +24,21 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     height: 244,
-    width,
+    width: width - 30,
+    position: 'absolute',
+    alignSelf:"center",
+    zIndex: 500,
+    borderRadius:10,
+    overflow:"hidden",
+    bottom: 0,
   },
   picker: { flex: 1 },
 });
 
 const MonthPicker = ({
   value,
+  isVisible,
+  onHide,
   minimumDate,
   maximumDate,
   onChange: onAction,
@@ -45,6 +53,7 @@ const MonthPicker = ({
   invariant(value, 'value prop is required!');
 
   const [opacity] = useState(new Value(0));
+  const [pickerVisible, setPickerVisible] = useState(isVisible)
   const [selectedDate, setSelectedDate] = useState(value);
 
   useEffect(() => {
@@ -57,8 +66,9 @@ const MonthPicker = ({
   }, []);
 
   const onChange = useCallback(
-    ({ nativeEvent: { newDate } }) => 
+    ({ nativeEvent: { newDate } }) => {
       setSelectedDate(moment(newDate, NATIVE_FORMAT).toDate()),
+      setPickerVisible(false)},
     [],
   );
 
@@ -75,8 +85,10 @@ const MonthPicker = ({
 
   const onDone = useCallback(() => {
     slideOut(
-      ({ finished }) =>
+      ({ finished }) => {
         finished && onAction && onAction(ACTION_DATE_SET, selectedDate),
+        setPickerVisible(false)
+      }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate]);
@@ -98,19 +110,26 @@ const MonthPicker = ({
   }, [selectedDate]);
 
   return (
-    <Animated.View
-      style={{
-        ...styles.container,
-        opacity,
-        transform: [
-          {
-            translateY: opacity.interpolate({
-              inputRange: [0.4, 1],
-              outputRange: [150, 0],
-            }),
-          },
-        ],
-      }}>
+    // <Animated.View
+    //   style={{
+    //     ...styles.container,
+    //     opacity,
+    //     transform: [
+    //       {
+    //         translateY: opacity.interpolate({
+    //           inputRange: [0.4, 1],
+    //           outputRange: [150, 0],
+    //         }),
+    //       },
+    //     ],
+    //   }}>
+    <Modal
+      animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={() => {
+          setPickerVisible(!pickerVisible)
+        }}>
       <View style={styles.pickerContainer}>
         <RNMonthPickerView
           {...{
@@ -132,7 +151,7 @@ const MonthPicker = ({
           maximumDate={maximumDate?.getTime() ?? null}
         />
       </View>
-    </Animated.View>
+    </Modal>
   );
 };
 
