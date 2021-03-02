@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSDate* value;
 @property (nonatomic, assign) NSDate* minimumDate;
 @property (nonatomic, assign) NSDate* maximumDate;
+@property (nonatomic, assign) CGFloat maxWidth;
 
 - (void)setLocale:(NSLocale *)useLocale;
 - (void)setMode:(NSString *)mode;

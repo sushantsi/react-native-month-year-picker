@@ -151,6 +151,14 @@ Enables phone's UI Mode color recognition; for Android 10+ and iOS 13+. Lower OS
 <RNMonthPicker theme={"dark"} />
 ```
 
+#### `maxWidth` (`optional`)
+
+Default `screen width`.
+
+```js
+<RNMonthPicker maxWidth={300.0} />
+```
+
 #### `maximumDate` (`optional`)
 
 Defines the maximum date that can be selected. Use year and month constructor.

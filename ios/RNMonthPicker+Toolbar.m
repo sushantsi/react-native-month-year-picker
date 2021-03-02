@@ -75,6 +75,11 @@ RNMonthPicker *picker;
     }
 }
 
+-(void)setMaxWidth:(CGFloat)maxWidth{
+    picker.frame = CGRectMake(0, 44, maxWidth - 30, 200);
+    toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, maxWidth - 30, 44)];
+    [self addSubview:toolbar];
+}
 
 - (void)setValue:(NSDate *)value {
     [picker setValue:value];

@@ -23,6 +23,7 @@
 @property (nonatomic, assign) NSString* neutralButtonLabel;
 @property (nonatomic, assign) BOOL autoTheme;
 @property (nonatomic, assign) NSString* theme;
+@property (nonatomic, assign) CGFloat maxWidth;
 
 - (void)setLocale:(NSLocale *)locale;
 

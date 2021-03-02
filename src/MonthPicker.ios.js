@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, Animated, Modal, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import moment from 'moment';
 import invariant from 'invariant';
-
 import RNMonthPickerView from './RNMonthPickerNativeComponent';
 import {
   ACTION_DATE_SET,
@@ -20,15 +19,16 @@ const styles = StyleSheet.create({
     flex:1
   },
   scrollModal:{
-    flex:1
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
   },
   pickerContainer: {
     height: 244,
-    width: width - 30,
     position: 'absolute',
     alignSelf:"center",
-    zIndex: 500,
     borderRadius:10,
+    backgroundColor:"green",
     overflow:"hidden",
     bottom: 0,
   },
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
 
 const MonthPicker = ({
   value,
+  preferredWidth,
   isVisible,
   onHide,
   minimumDate,
@@ -48,7 +49,8 @@ const MonthPicker = ({
   cancelButton,
   neutralButton,
   autoTheme = true,
-  theme = "light"
+  theme = "light",
+  maxWidth = width,
 }) => {
   invariant(value, 'value prop is required!');
 
@@ -140,9 +142,10 @@ const MonthPicker = ({
             cancelButton,
             neutralButton,
             autoTheme,
-            theme
+            theme,
+            maxWidth
           }}
-          style={styles.picker}
+          style={[styles.picker,{width: maxWidth - 30}]}
           value={value.getTime()}
           minimumDate={minimumDate?.getTime() ?? null}
           maximumDate={maximumDate?.getTime() ?? null}

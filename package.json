@@ -1,39 +1,41 @@
 {
-  "name": "react-native-month-year-picker",
-  "title": "React Native Month Picker",
-  "version": "1.6.4",
-  "description": "React Native Month Picker component for iOS & Android",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "start:android": "react-native run-android --root=\"./example\"",
-    "start:ios": "react-native run-ios --project-path=\"./example/ios\"",
-    "pod:install": "cd example/ios && rm -rf Pods/ && pod install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src -c .eslintrc.js --ext js,jsx"
-  },
-  "repository": {
+  "_from": "git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+  "_id": "react-native-month-year-picker@1.6.4",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-month-year-picker",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "https://github.com/gusparis/react-native-month-year-picker.git"
+    "raw": "react-native-month-year-picker@git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+    "name": "react-native-month-year-picker",
+    "escapedName": "react-native-month-year-picker",
+    "rawSpec": "git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+    "saveSpec": "git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+    "fetchSpec": "https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+    "gitCommittish": null
   },
-  "keywords": [
-    "react-native",
-    "month-picker",
-    "month-year-picker",
-    "ios",
-    "android"
+  "_requiredBy": [
+    "#USER",
+    "/"
   ],
+  "_resolved": "git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git#f8fa0c6962d8a7bdb4687af56c95e4e92e7af5ae",
+  "_spec": "react-native-month-year-picker@git+https://github.com/Mayuri-Markandu/react-native-month-year-picker.git",
+  "_where": "/Users/mac-obs-23/Documents/Mayuri/FirstLight/tvpass-ui-app",
   "author": {
     "name": "Gustavo Dante Paris",
     "email": "gustavodanteparis@gmail.com"
   },
-  "license": "MIT",
-  "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md",
-  "peerDependencies": {
-    "react": ">= 16.11.0",
-    "react-native": ">= 0.60.0"
+  "bugs": {
+    "url": "https://github.com/gusparis/react-native-month-year-picker/issues"
   },
+  "bundleDependencies": false,
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "moment": "^2.24.0"
+  },
+  "deprecated": false,
+  "description": "React Native Month Picker component for iOS & Android",
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
@@ -46,8 +48,34 @@
     "react-native": "^0.63.2",
     "semantic-release": "^17.0.7"
   },
-  "dependencies": {
-    "invariant": "^2.2.4",
-    "moment": "^2.24.0"
-  }
+  "homepage": "https://github.com/gusparis/react-native-month-year-picker#readme",
+  "keywords": [
+    "react-native",
+    "month-picker",
+    "month-year-picker",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "main": "src/index.js",
+  "name": "react-native-month-year-picker",
+  "peerDependencies": {
+    "react": ">= 16.11.0",
+    "react-native": ">= 0.60.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gusparis/react-native-month-year-picker.git"
+  },
+  "scripts": {
+    "lint": "eslint src -c .eslintrc.js --ext js,jsx",
+    "pod:install": "cd example/ios && rm -rf Pods/ && pod install",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:android": "react-native run-android --root=\"./example\"",
+    "start:ios": "react-native run-ios --project-path=\"./example/ios\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "title": "React Native Month Picker",
+  "version": "1.6.4"
 }

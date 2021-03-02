@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 import moment from 'moment';
 
+
 import MonthPicker from 'react-native-month-year-picker';
+
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +60,7 @@ const App = () => {
           locale="en"
           mode="full"
           autoTheme={true}
+          maxWidth={width * 0.6}
         />
       )}
     </SafeAreaView>

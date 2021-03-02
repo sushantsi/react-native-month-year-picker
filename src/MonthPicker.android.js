@@ -17,7 +17,6 @@ const MonthPicker = ({
   ...restProps
 }) => {
   invariant(value, 'value prop is required!');
-
   RNMonthPickerDialogModule.open({
     value: value.getTime(),
     minimumDate: minimumDate?.getTime() ?? null,
