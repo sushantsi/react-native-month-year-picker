@@ -59,7 +59,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)setValue:(nonnull NSDate *)value {
     if (value != _value) {
-        NSDateComponents *selectedDateComponents = [gregorian components:(NSCalendarUnitDay|NSCalendarUnitMonth) fromDate:value];
+        NSDateComponents *selectedDateComponents = [gregorian components:(NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:value];
         years = [[NSMutableArray alloc] init];
         for (int i=1; i<DEFAULT_SIZE+1; i++) {
             [years addObject:[NSNumber numberWithInt:i]];
@@ -76,12 +76,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)setMaximumDate:(NSDate *)maximumDate {
     _maximumDate = maximumDate;
-    maxComponents = _maximumDate ? [gregorian components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:_maximumDate] : nil;
+    maxComponents = _maximumDate ? [gregorian components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:_maximumDate] : nil;
 }
 
 - (void)setMinimumDate:(NSDate *)minimumDate {
     _minimumDate = minimumDate;
-    minComponents = _minimumDate ? [gregorian components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:_minimumDate] : nil;
+    minComponents = _minimumDate ? [gregorian components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:_minimumDate] : nil;
 }
 
 - (void)setSelectedRows:(BOOL)animated {
