@@ -100,9 +100,9 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 // number of rows
 - (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (component) {
-        case 0:
-            return [years count];
         case 1:
+            return [years count];
+        case 0:
             return 12;
             break;
         default:
@@ -143,11 +143,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 - (void)pickerView:(__unused UIPickerView *)pickerView
       didSelectRow:(NSInteger)row inComponent:(__unused NSInteger)component {
     switch (component) {
-        case 1:
+        case 0:
             [self getSelectedMonthRow:row];
             [self getSelectedYearRow:selectedYearRow];
             break;
-        case 0:
+        case 1:
             [self getSelectedYearRow:row];
 //            [self getSelectedMonthRow:selectedMonthRow];
             break;
