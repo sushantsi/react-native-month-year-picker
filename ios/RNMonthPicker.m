@@ -114,12 +114,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 // row titles
 - (NSString *)pickerView:(nonnull UIPickerView *) pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     switch (component) {
-        case 1: {
+        case 0: {
             NSDateComponents *comps = [[NSDateComponents alloc] init];
             [comps setMonth:row + 1];
             return [NSString stringWithFormat:@"%@", [df stringFromDate:[gregorian dateFromComponents:comps]]];
         }
-        case 0:
+        case 1:
             return [NSString stringWithFormat:@"%@", years[row]];
         default:
             return nil;
